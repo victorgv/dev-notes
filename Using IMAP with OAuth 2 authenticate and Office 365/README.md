@@ -17,6 +17,7 @@ Replace into Main class in JAVA project or into xxx.pas in DELPHI project.
 # Setting up Azure AD
 On [how-to-authenticate-an-imap-pop-smtp-app](https://learn.microsoft.com/en-us/exchange/client-developer/legacy-protocols/how-to-authenticate-an-imap-pop-smtp-application-by-using-oauth) ([spanish version](https://learn.microsoft.com/es-es/exchange/client-developer/legacy-protocols/how-to-authenticate-an-imap-pop-smtp-application-by-using-oauth)) page it is explained in detail, you have to pay attention because there are several steps and it is easy to make a mistake.
 
+It's important when you are  *registering an Azure AD application's service principal in Exchange* pay attention and use *Object_ID* (of "... -ServiceId <OBJECT_ID>") from your AAD application's enterprise application (not from App Registration node).  
 
 
 # Thanks
