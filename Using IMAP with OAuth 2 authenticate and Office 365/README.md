@@ -1,7 +1,7 @@
 # Using IMAP with OAuth 2 authenticate and Office 365
 This document summarizes some tips to correctly configure Azure AD, consent and so on, for **background applications** like services or daemons..
 It also provides two working examples getting a token, connecting to an outlook account using IMAP and OAuth 2, and listing mailbox folders.
-- DELPHI example (tested on DELPHI 10.4 Community Edition)
+- [DELPHI example (tested on DELPHI 10.4 Community Edition)](https://github.com/victorgv/dev-notes/tree/main/Using%20IMAP%20with%20OAuth%202%20authenticate%20and%20Office%20365/DELPHI_example)
 - [JAVA example](https://github.com/victorgv/dev-notes/tree/main/Using%20IMAP%20with%20OAuth%202%20authenticate%20and%20Office%20365/JAVA_example)
 
 # Using the examples
