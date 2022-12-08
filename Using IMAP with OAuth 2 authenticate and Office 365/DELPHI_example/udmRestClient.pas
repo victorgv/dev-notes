@@ -28,7 +28,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses ufmMainForm;
+uses ufmMainForm, constant;
 
 {$R *.dfm}
 
@@ -36,7 +36,7 @@ uses ufmMainForm;
 
 function TdmRestClient.GetAccessToken: String;
 begin
-  ClientAccessToken.BaseURL := 'https://login.microsoftonline.com/'+fmMainForm.ED_TENANTID.Text+'/oauth2/v2.0/token';
+  ClientAccessToken.BaseURL := C_ACCESSTOKENENDPOINT.Replace('*YOUR_TENANT_ID*', fmMainForm.ED_TENANTID.Text);
   setRequestParameters;
   Result := RequestAccessTokenGraph;
 end;
@@ -48,7 +48,7 @@ var
 begin
   param := RequestAccessToken.Params.AddItem;
   param.Name := 'scope';
-  param.Value := 'https://outlook.office365.com/.default';
+  param.Value := C_SCOPES;
   param.Kind := pkREQUESTBODY;
   param.Options := [poDoNotEncode];
 

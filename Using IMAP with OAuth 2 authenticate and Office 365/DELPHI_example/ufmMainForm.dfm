@@ -91,32 +91,33 @@ object fmMainForm: TfmMainForm
       TabOrder = 4
       OnClick = BT_GETTOKENClick
     end
-    object Button1: TButton
+    object BT_CONNECT: TButton
       Left = 568
       Top = 14
       Width = 153
       Height = 45
       Caption = '(2) Connect IMAP'
       TabOrder = 5
-      OnClick = BT_GETTOKENClick
+      OnClick = BT_CONNECTClick
     end
-    object Button2: TButton
+    object BT_LIST_IMAP: TButton
       Left = 736
       Top = 14
       Width = 153
       Height = 45
       Caption = '(4) List IMAP'
       TabOrder = 6
-      OnClick = BT_GETTOKENClick
+      OnClick = BT_LIST_IMAPClick
     end
   end
-  object Memo1: TMemo
+  object ME_LOG: TMemo
     Left = 0
     Top = 153
     Width = 945
     Height = 506
     Align = alClient
     ReadOnly = True
+    ScrollBars = ssBoth
     TabOrder = 1
   end
 end

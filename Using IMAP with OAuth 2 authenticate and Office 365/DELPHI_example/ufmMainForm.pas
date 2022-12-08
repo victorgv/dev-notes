@@ -4,12 +4,12 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, uTImapOutlookEmail;
 
 type
   TfmMainForm = class(TForm)
     Panel1: TPanel;
-    Memo1: TMemo;
+    ME_LOG: TMemo;
     ED_TENANTID: TEdit;
     Label1: TLabel;
     Label2: TLabel;
@@ -19,23 +19,20 @@ type
     Label4: TLabel;
     ED_MAIL: TEdit;
     BT_GETTOKEN: TButton;
-    Button1: TButton;
-    Button2: TButton;
+    BT_CONNECT: TButton;
+    BT_LIST_IMAP: TButton;
     procedure FormCreate(Sender: TObject);
     procedure BT_GETTOKENClick(Sender: TObject);
+    procedure BT_CONNECTClick(Sender: TObject);
+    procedure BT_LIST_IMAPClick(Sender: TObject);
   private
     { Private declarations }
+    FToken: String;
+    InstanceTImapOutlookEmail: TImapOutlookEmail;
   public
     { Public declarations }
   end;
 
-const
-
-
-  c_microsoft_tenantid = '????????-????-????-????-????????????';
-  c_microsoft_tenantid = '????????-????-????-????-????????????';
-  c_microsoft_clientsecret = 'AAAA~BBBBBBBB.CCCCCCCCCCCCCCCCCC~DDDD';
-  c_microsoft_mail = 'your_email@your_domain.xxx';
 
 
 var
@@ -45,26 +42,42 @@ implementation
 
 {$R *.dfm}
 
-uses udmRestClient;
+uses udmRestClient, constant;
 
 procedure TfmMainForm.FormCreate(Sender: TObject);
 begin
-  ED_TENANTID.text := c_microsoft_tenantid;
-  ED_CLIENTID.Text := c_microsoft_clientid;
-  ED_SECRET.Text := c_microsoft_clientsecret;
-  ED_MAIL.Text := c_microsoft_mail;
+  InstanceTImapOutlookEmail := NIL;
+  ED_TENANTID.text := C_MICROSOFT_TENANTID;
+  ED_CLIENTID.Text := C_MICROSOFT_CLIENTID;
+  ED_SECRET.Text := C_MICROSOFT_CLIENTSECRET;
+  ED_MAIL.Text := C_MICROSOFT_MAIL;
 end;
 
 procedure TfmMainForm.BT_GETTOKENClick(Sender: TObject);
-var
-  v_token: string;
 begin
-  memo1.Lines.Clear;
-  v_token := dmRestClient.GetAccessToken;
-  if v_token <> '' then
+  ME_LOG.Lines.Clear;
+  FToken := dmRestClient.GetAccessToken;
+  if FToken <> '' then
   begin
-    memo1.Lines.Add('Access Token: ' + v_token);
+    ME_LOG.Lines.Add('Access Token: ' + FToken);
+  end
+  else
+  begin
+    ME_LOG.Lines.Add('Authenticating Error');
   end;
+end;
+
+procedure TfmMainForm.BT_CONNECTClick(Sender: TObject);
+begin
+  if not Assigned(InstanceTImapOutlookEmail) then
+    InstanceTImapOutlookEmail := TImapOutlookEmail.Create(ED_MAIL.Text, FToken);
+
+  InstanceTImapOutlookEmail.DoConnect;
+end;
+
+procedure TfmMainForm.BT_LIST_IMAPClick(Sender: TObject);
+begin
+  InstanceTImapOutlookEmail.DoListMailBoxes;
 end;
 
 
