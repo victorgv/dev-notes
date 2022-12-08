@@ -12,6 +12,7 @@ object fmMainForm: TfmMainForm
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel

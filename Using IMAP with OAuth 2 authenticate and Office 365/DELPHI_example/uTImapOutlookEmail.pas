@@ -12,12 +12,11 @@ type
     FImap: TIdIMAP4;
     FIdSSLIOHandlerSocketIMAP: TIdSSLIOHandlerSocketOpenSSL;
     FIdConnectionInterceptIMAP: TIdConnectionIntercept;
-
     procedure IdConnectionInterceptSend(ASender: TIdConnectionIntercept; var ABuffer: TIdBytes);
     procedure IdConnectionInterceptReceive(ASender: TIdConnectionIntercept; var ABuffer: TIdBytes);
   public
     constructor Create(const email_address,token: String);
-    destructor Destroy;
+    destructor Destroy; Override;
     procedure DoConnect;
     procedure DoListMailBoxes;
 
@@ -36,12 +35,12 @@ begin
   FIdSSLIOHandlerSocketIMAP := TIdSSLIOHandlerSocketOpenSSL.Create;
   FImap.IOHandler := FIdSSLIOHandlerSocketIMAP;
 
-  // Optional, only in order to capturate communication messages
+  // --> Optional, only in order to capturate communication messages
   FIdConnectionInterceptIMAP := TIdConnectionIntercept.Create;
   FImap.Intercept := FIdConnectionInterceptIMAP;
   FIdConnectionInterceptIMAP.OnSend := IdConnectionInterceptSend;
   FIdConnectionInterceptIMAP.OnReceive := IdConnectionInterceptReceive;
-
+  // --> Final
 
   FToken := token;
   FEmail_address := email_address;
@@ -52,7 +51,7 @@ destructor TImapOutlookEmail.Destroy;
 begin
   FImap.Free;
   FIdSSLIOHandlerSocketIMAP.Free;
-
+  FIdConnectionInterceptIMAP.Free;
   inherited;
 end;
 
@@ -73,7 +72,6 @@ begin
   TIdSASLXOAuth(xoauthSASL.SASL).User := C_MICROSOFT_MAIL;
 
   //FIdSSLIOHandlerSocketIMAP.SSLOptions.Method := TIdSSLVersion.sslvTLSv1_2;
-
 
   FImap.Connect;
   fmMainForm.ME_LOG.Lines.Add('********** IMAP IS CONNECTED');

@@ -89,16 +89,15 @@ begin
     RefreshToken := LToken;
   if dmRestClient.ResponseAccessToken.GetSimpleValue('id_token', LToken) then
     IDToken := LToken;
-  // detect token-type. this is important for how using it later
-  //if dmRestClient.ResponseAccessToken.GetSimpleValue('token_type', LToken) then
-  //  TokenType := OAuth2TokenTypeFromString(LToken);
-  // if provided by the service, the field "expires_in" contains
-  // the number of seconds an access-token will be valid
+
   if dmRestClient.ResponseAccessToken.GetSimpleValue('expires_in', LToken) then
   begin
     LIntValue := StrToIntdef(LToken, -1);
     if (LIntValue > -1) then
-      AccessTokenExpiry := IncSecond(Now, LIntValue)
+    begin
+      AccessTokenExpiry := IncSecond(Now, LIntValue);
+      fmMainForm.ME_LOG.Lines.Add('Token expires: ' + FormatDateTime('dd/mm/yyyy hh:nn', AccessTokenExpiry));
+    end
     else
       AccessTokenExpiry := 0.0;
   end;

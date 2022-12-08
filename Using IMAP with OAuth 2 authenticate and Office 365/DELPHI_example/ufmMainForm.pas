@@ -25,6 +25,7 @@ type
     procedure BT_GETTOKENClick(Sender: TObject);
     procedure BT_CONNECTClick(Sender: TObject);
     procedure BT_LIST_IMAPClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
     FToken: String;
@@ -51,6 +52,11 @@ begin
   ED_CLIENTID.Text := C_MICROSOFT_CLIENTID;
   ED_SECRET.Text := C_MICROSOFT_CLIENTSECRET;
   ED_MAIL.Text := C_MICROSOFT_MAIL;
+end;
+
+procedure TfmMainForm.FormDestroy(Sender: TObject);
+begin
+  InstanceTImapOutlookEmail.Free;
 end;
 
 procedure TfmMainForm.BT_GETTOKENClick(Sender: TObject);
