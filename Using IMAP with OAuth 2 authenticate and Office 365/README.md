@@ -11,7 +11,7 @@ You need an application registered on Azure AD and this values:
 - Secret Value
 - Mail address
 
-Replace into Main class in JAVA project or into xxx.pas in DELPHI project.
+Replace into Main class in JAVA project or into constant.pas in DELPHI project.
 
 
 # Setting up Azure AD
